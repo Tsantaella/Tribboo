@@ -16,12 +16,17 @@ class Song extends React.Component {
 
         return (
             <div className = "song">
-                <p> {this.state.data.name} </p> 
+                <img 
+                    src={this.props.data.album.images[0].url}
+                    width="250"
+                    height="250">
+                </img>
+                <h2> {this.props.data.name} </h2>  
                 {
-                    this.state.data.artists.map((artist) => (
-                        <ul key={artist.id}>
+                    this.props.data.artists.map((artist) => (
+                        <p key={artist.id}>
                             {artist.name}
-                        </ul>
+                        </p>
                     ))
                 }
             </div>
@@ -60,17 +65,14 @@ class App extends React.Component {
             React.createElement('h1', {}, 'Wait a minute...')
         );
 
-        console.log(Object.keys(songs.items[0])); 
-        console.log(Object.keys(songs.items[0].artists));
-        console.log(Object.keys(songs.items[0].external_urls));
+        console.log(Object.keys(songs.items[0].album));
         var x = 1;
         return (
             <div className="App">  
-                <h1> {songs.message} </h1> 
-                <h2> Songs: </h2>
+                <h1 className="songMsg"> {songs.message} </h1> 
                 {
                     songs.items.map((song) => (
-                        <Song key={song.id} name={song.name} artists={song.artists}/>
+                        <Song className="song" key={song.id} data={song}/>
                     ))
                 }
             </div>
