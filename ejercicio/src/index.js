@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
 class Song extends React.Component {
     
     constructor(props) {
@@ -12,10 +11,14 @@ class Song extends React.Component {
         }
     }
 
-    render() {
+    handleClickSong() {
+        window.open(this.props.data.external_urls.spotify, "_blank");
+    }    
 
+    render() {
+ 
         return (
-            <div className = "song">
+            <div className = "song" onClick={this.handleClickSong.bind(this)}>
                 <img 
                     src={this.props.data.album.images[0].url}
                     width="250"
@@ -65,16 +68,18 @@ class App extends React.Component {
             React.createElement('h1', {}, 'Wait a minute...')
         );
 
-        console.log(Object.keys(songs.items[0].album));
+        console.log(Object.keys(songs.items[0].external_urls));
         var x = 1;
         return (
             <div className="App">  
                 <h1 className="songMsg"> {songs.message} </h1> 
-                {
-                    songs.items.map((song) => (
-                        <Song className="song" key={song.id} data={song}/>
-                    ))
-                }
+                <div className="songParent"> 
+                    {
+                        songs.items.map((song) => (
+                            <Song key={song.id} data={song} />
+                        ))
+                    }
+                </div>
             </div>
         );
     }
